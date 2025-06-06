@@ -1,18 +1,51 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/index.css'; 
 
-//Bootstrap
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap"
+function LucesSemaforo() {
+  const [color, setColor] = useState(null); 
+  const [Purpura, setPurpura] = useState(false); 
 
-// index.css'
-import '../styles/index.css'
+ 
+  const coloresBase = ['red', 'yellow', 'green'];
+  const colores = Purpura ? [...coloresBase, 'purple'] : coloresBase;
 
-// components
-import Home from './components/Home';
+  
+  const cycleColor = () => {
+    const currentIndex = colores.indexOf(color);
+    const nextIndex = (currentIndex + 1) % colores.length;
+    setColor(colores[nextIndex]);
+  };
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Home/>
-  </React.StrictMode>,
-)
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <div id="traffic-light">
+        {colores.map((c) => (
+          <div
+            key={c}
+            className={`light ${c} ${color === c ? 'selected' : ''}`}
+            onClick={() => setColor(color === c ? null : c)} 
+          ></div>
+        ))}
+      </div>
+
+      <div className="d-flex justify-content-center flex-wrap gap-3 mt-3">
+        <button className="btn btn-primary" onClick={cycleColor}>
+          Cambiar color manualmente
+        </button>
+
+        <button
+          className="btn btn-secondary"
+          onClick={() => setPurpura(true)}
+          disabled={Purpura}
+        >
+          Agregar púrpura
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.querySelector('#root'));
+root.render(<LucesSemaforo />);

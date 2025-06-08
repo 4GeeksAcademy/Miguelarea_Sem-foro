@@ -1,9 +1,10 @@
+
 #traffic-light {
   width: 100px;
   background: black;
   padding: 20px;
   border-radius: 20px;
-  margin: 50px auto;
+  margin: 50px auto 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -15,7 +16,7 @@
   height: 60px;
   border-radius: 50%;
   opacity: 0.3;
-  transition: opacity 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
@@ -28,11 +29,59 @@
 .green {
   background-color: green;
 }
+.purple {
+  background-color: purple;
+}
 
 .selected {
   opacity: 1;
-  box-shadow: 0 0 20px 5px white;
+  box-shadow: 0 0 25px 5px white;
 }
-.purple {
-  background-color: purple;
+
+
+#cruce-container {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  margin-top: 40px;
+  background: linear-gradient(white, lightgray);
+  overflow: hidden;
+}
+
+#paso-peatones {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 220px;
+  height: 40px;
+  background: repeating-linear-gradient(
+    to right,
+    white,
+    white 20px,
+    black 20px,
+    black 40px
+  );
+  z-index: 1;
+}
+
+
+.persona-animada {
+  position: absolute;
+  bottom: 5px;
+  left: -50px;
+  font-size: 2.5rem;
+  animation: cruzar 3s linear forwards;
+  z-index: 2;
+}
+
+@keyframes cruzar {
+  0% {
+    left: -50px;
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
 }

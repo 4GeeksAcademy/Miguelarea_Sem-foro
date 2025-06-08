@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/index.css'; 
@@ -7,16 +7,30 @@ function LucesSemaforo() {
   const [color, setColor] = useState(null); 
   const [Purpura, setPurpura] = useState(false); 
 
- 
   const coloresBase = ['red', 'yellow', 'green'];
   const colores = Purpura ? [...coloresBase, 'purple'] : coloresBase;
 
-  
   const cycleColor = () => {
     const currentIndex = colores.indexOf(color);
     const nextIndex = (currentIndex + 1) % colores.length;
     setColor(colores[nextIndex]);
   };
+
+  
+  useEffect(() => {
+    if (color === 'green') {
+      const contenedor = document.getElementById('cruce-container');
+
+      const persona = document.createElement('div');
+      persona.textContent = '🚶';
+      persona.className = 'persona-animada';
+      contenedor.appendChild(persona);
+
+      setTimeout(() => {
+        persona.remove();
+      }, 20000);
+    }
+  }, [color]);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -42,6 +56,11 @@ function LucesSemaforo() {
         >
           Agregar púrpura
         </button>
+      </div>
+
+      
+      <div id="cruce-container">
+        <div id="paso-peatones"></div>
       </div>
     </div>
   );
